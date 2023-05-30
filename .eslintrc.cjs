@@ -84,8 +84,6 @@ module.exports = {
       2,
       { anonymous: 'never', asyncArrow: 'always', named: 'never' },
     ],
-    'typescript-sort-keys/interface': 2,
-    'typescript-sort-keys/string-enum': 2,
     'unicorn/better-regex': 2,
     'unicorn/catch-error-name': 2,
     'unicorn/consistent-function-scoping': 2,

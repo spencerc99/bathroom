@@ -1,30 +1,64 @@
-const Link = (props: JSX.IntrinsicElements['a']) => (
-  <a
-    className="text-pink-500 underline hover:no-underline dark:text-pink-400"
-    {...props}
-  />
-);
+import { initCursorChat } from 'cursor-chat';
+import { WebrtcProvider } from 'y-webrtc';
+import Y from 'yjs';
+import { StartAwarenessFunction } from 'zustand-yjs';
+import { Bathroom } from '../components/Bathroom';
+import {
+  DefaultPersistedUserLetterContext,
+  PersistedUserLetterContextInfo,
+  UserContextStorageId,
+} from '../context/UserContext';
+import styles from '../styles/Home.module.scss';
+import { getLocalStorageItem } from '../utils/localstorage';
 
-export default function App() {
+export const YJS_ROOM = 'one-person-website';
+
+export const connectDoc = (
+  doc: Y.Doc,
+  startAwareness: StartAwarenessFunction,
+) => {
+  // Hack to get around server-side rendering build
+  if (typeof window === 'undefined') {
+    return () => {};
+  }
+
+  const ctx =
+    getLocalStorageItem<PersistedUserLetterContextInfo>(UserContextStorageId) ??
+    DefaultPersistedUserLetterContext;
+  const color = ctx.color;
+  console.log(
+    `Connecting to the internet as ${color}... ${doc.guid} initialized`,
+  );
+
+  const stopCursorChatCallback = initCursorChat('(we)bsite', {
+    yDoc: doc,
+    // @ts-ignore
+    color,
+  });
+  // @ts-ignore
+  const provider = new WebrtcProvider(YJS_ROOM, doc, {
+    signaling: [
+      'wss://signalling.communities.digital',
+      // "ws://localhost:4444",
+      'wss://signaling.yjs.dev',
+      'wss://y-webrtc-signaling-eu.herokuapp.com',
+    ],
+  });
+  console.log('Connected!');
+  const stopAwarenessCallback = startAwareness(provider);
+  return () => {
+    provider.disconnect();
+    stopAwarenessCallback();
+    stopCursorChatCallback();
+    console.log('Disconnected from the internet...');
+  };
+};
+
+export default function Home() {
   return (
-    <div className="mx-auto my-8 mt-10 w-8/12 rounded border border-gray-200 p-4 shadow-md dark:border-neutral-600 dark:bg-neutral-800 dark:shadow-none">
-      <h1 className="mb-4 text-4xl">Welcome</h1>
-      <p className="my-4">
-        <em>Minimal, fast, sensible defaults.</em>
-      </p>
-      <p className="my-4">
-        Using <Link href="https://vitejs.dev/">Vite</Link>,{' '}
-        <Link href="https://reactjs.org/">React</Link>,{' '}
-        <Link href="https://www.typescriptlang.org/">TypeScript</Link> and{' '}
-        <Link href="https://tailwindcss.com/">Tailwind</Link>.
-      </p>
-      <p className="my-4">
-        Change{' '}
-        <code className="border-1 2py-1 rounded border border-pink-500 bg-neutral-100 px-1 font-mono text-pink-500 dark:border-pink-400 dark:bg-neutral-700 dark:text-pink-400">
-          src/App.tsx
-        </code>{' '}
-        for live updates.
-      </p>
-    </div>
+    <main>
+      <h1 className={styles.title}>1 person website</h1>
+      <Bathroom />
+    </main>
   );
 }

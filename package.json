@@ -1,27 +1,36 @@
 {
-  "name": "@nkzw/vite-ts-react-tailwind",
+  "name": "bathroom",
   "version": "0.0.1",
-  "author": "Christoph Nakazawa <christoph.pojer@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/cpojer/vite-ts-react-tailwind.git"
-  },
+  "author": "Spencer Chang <spencerc99@gmail.com>",
   "type": "module",
   "engines": {
-    "node": ">=18.11.0",
-    "pnpm": ">=7.1.0"
+    "node": ">=18.11.0"
   },
   "dependencies": {
+    "@tldraw/assets": "^2.0.0-canary.225e3969",
+    "@tldraw/tldraw": "^2.0.0-alpha.12",
+    "cursor-chat": "^0.5.5",
+    "dayjs": "^1.11.7",
+    "framer-motion": "^8.0.2",
+    "randomcolor": "^0.6.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-draggable": "^4.4.5",
+    "signia": "^0.1.4",
+    "signia-react": "^0.1.4",
+    "y-indexeddb": "^9.0.9",
+    "y-webrtc": "^10.2.3",
+    "yjs": "^13.5.44",
+    "zustand": "^4.2.0",
+    "zustand-yjs": "^0.0.14"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "^4.0.0-alpha.7",
     "@swc/core": "^1.3.36",
     "@types/node": "^20.2.3",
     "@types/prettier": "^2.7.2",
-    "@types/react-dom": "^18.0.11",
     "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.53.0",
     "@vitejs/plugin-react": "^4.0.0",
@@ -37,8 +46,7 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.21",
     "prettier": "^2.8.4",
-    "prettier-plugin-tailwindcss": "^0.3.0",
-    "tailwindcss": "^3.2.7",
+    "sass": "^1.62.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2",
     "vite": "^4.1.4",
